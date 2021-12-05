@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SinglePage web</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <script>
+           function goto(div){
+               $('html,body').animate({
+                    scrollTop:$("#"+div).offset().top            
+                   }, 'slow');
+           }
+    </script>
+           
+    <script>
+        function gototop(){
+               window.scrollTop(0, 0);
+           }
+
+    </script>
+
+    <style>
+
+        #header{
+            width: 100%;
+            margin: 0px auto;
+            text-align: center;
+            height: 10px;
+            line-height: 70px;
+            color: blue;
+        }
+
+        #header li{
+            display: inline-block;
+            margin-right: 25px;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        #header #site_name{
+            text-align: left;
+            width: 680px;
+            font-size: 35px;
+            margin-left: 20px;
+        }
+       
+        #home, #insert, #contact{
+            margin-top: 100px;
+            margin-right: 5%;
+            height: 500px;
+            margin-left: 5%;
+            padding: 50px;
+            border-style: solid;
+        }
+
+        .scroll-top {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            z-index:99;
+        }
+
+
+    </style>
+
+    <div id="header">
+        <li id="site_name">SinglePage</li>
+        <li onclick = "goto('home');">Home</li>
+        <li onclick = "goto('insert');">Crea registro</li>
+        <li onclick = "goto('contact');">Contacto</li>
+        <hr>
+    </div>
+</head>
+<body>
+    <botton type="button" class="scroll-top" onclick="gototop();">&Uarr;</botton>
+    <center>
+
+        <div id="home">
+        <h1>SinglePage Website</h1>
+        <h2>Con Django</h2>
+        <hr>
+
+        <table border="1">
+            <tr>
+                <th>Id</th>
+                <th>Firstname</th>
+                <th>Lastname</th>
+                <th>Email</th>
+            </tr>
+            {% for result in employee %}
+            <tr>
+                <td>{{result.id}}</td>
+                <td>{{result.firstname}}</td>
+                <td>{{result.lastname}}</td>
+                <td>{{result.email}}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        </div>
+
+        <div id="insert">
+            <h1>Ingresa registro</h1>
+            <hr/>
+            <form method="POST">
+                {% csrf_token %}
+            <table border="1">
+                <tr>
+                    <td>Nombre: </td>
+                    <td><input type="text" placeholder="Nombre" name="firstname"</td>
+                </tr>
+                <tr>
+                    <td>Apellido: </td>
+                    <td><input type="text" placeholder="Apellido" name="lastname"</td>
+                </tr>
+                <tr>
+                    <td>Email: </td>
+                    <td><input type="text" placeholder="email" name="email"</td>
+                </tr>
+            </table>
+            <input type="submit" value="insert" onclick="return alert('Registro guardado con Exito')">
+            </form>
+        </div>
+
+        <div id="contact">
+            <h1> Pagina de Contacto</h1>
+        </div>
+
+    </center>
+</body>
+</html>
